@@ -38,19 +38,16 @@ bool MQTT::publish(const char* topic, const char* payload) {
 
 void MQTT::sendHADiscovery() {
   static char devId[20] = { 0 };
-  sprintf(devId, "AN_%X", ESP.getChipId());
+  sprintf(devId, "AIRBOX_%X", ESP.getChipId());
   static char devName[20] = { 0 };
-  sprintf(devName, "Air Nose %X", (uint16_t)ESP.getChipId());
+  sprintf(devName, "Air Box %X", (uint16_t)ESP.getChipId());
   uint8_t mac[6];
   char macStr[18] = { 0 };
   WiFi.macAddress(mac);
   sprintf(macStr, "%02X%02X%02X%02X%02X%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
   String mdl = "PM";
   #ifdef USE_TVOC
-  mdl += "VO";
-  #endif
-  #ifdef USE_TEMP
-  mdl += "HT";
+  mdl += "VOC";
   #endif
   JsonDocument doc;
   doc["dev"]["ids"] = devId;
@@ -83,7 +80,7 @@ void MQTT::sendHADiscovery() {
   doc["cmps"][pm25]["p"] = "sensor";
   doc["cmps"][pm25]["dev_cla"] = "pm25";
   doc["cmps"][pm25]["unit_of_meas"] = "µg/m³";
-  doc["cmps"][pm25]["val_tpl"] = "{{ value_json.pm_2_5_epa }}";
+  doc["cmps"][pm25]["val_tpl"] = "{{ value_json.pm_2_5 }}";
   doc["cmps"][pm25]["sug_dsp_prc"] = 0;
   doc["cmps"][pm25]["uniq_id"] = pm25;
   String pm10 = String(devId) + "_PM10";
@@ -118,28 +115,6 @@ void MQTT::sendHADiscovery() {
   doc["cmps"][tvocTrend]["name"] = "TVOC 趋势";
   doc["cmps"][tvocTrend]["uniq_id"] = tvocTrend;
   #endif
-  #ifdef USE_TEMP
-  String temp = String(devId) + "_TEMP";
-  doc["cmps"][temp]["p"] = "sensor";
-  doc["cmps"][temp]["dev_cla"] = "temperature";
-  doc["cmps"][temp]["unit_of_meas"] = "°C";
-  doc["cmps"][temp]["val_tpl"] = "{{ value_json.temp }}";
-  doc["cmps"][temp]["sug_dsp_prc"] = 1;
-  doc["cmps"][temp]["uniq_id"] = temp;
-  String rh = String(devId) + "_RH";
-  doc["cmps"][rh]["p"] = "sensor";
-  doc["cmps"][rh]["dev_cla"] = "humidity";
-  doc["cmps"][rh]["unit_of_meas"] = "%";
-  doc["cmps"][rh]["val_tpl"] = "{{ value_json.rh }}";
-  doc["cmps"][rh]["sug_dsp_prc"] = 1;
-  doc["cmps"][rh]["uniq_id"] = rh;
-  #endif
-  String uptime = String(devId) + "_UPTIME";
-  doc["cmps"][uptime]["p"] = "sensor";
-  doc["cmps"][uptime]["dev_cla"] = "duration";
-  doc["cmps"][uptime]["unit_of_meas"] = "s";
-  doc["cmps"][uptime]["val_tpl"] = "{{ value_json.uptime }}";
-  doc["cmps"][uptime]["uniq_id"] = uptime;
   static char body[2000];
   serializeJson(doc, body);
   _client.setBufferSize(2000);

@@ -22,10 +22,6 @@ public:
     #ifdef USE_TVOC
     float tvoc;
     #endif
-    #ifdef USE_TEMP
-    float temp;
-    float rh;
-    #endif
   };
   AQICN(const char *name, float latitude, float longitude, const char *token, unsigned long interval = 30);
   AQICN(const char *id, const char *name, float latitude, float longitude, const char *token, unsigned long interval = 30);

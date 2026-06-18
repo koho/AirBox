@@ -48,11 +48,6 @@ void AQICN::feed(DATA& data, float trend) {
   #ifdef USE_TVOC
   if (!isnan(data.tvoc)) _acc[3].add(data.tvoc);
   #endif
-
-  #ifdef USE_TEMP
-  if (!isnan(data.temp)) _acc[4].add(data.temp);
-  if (!isnan(data.rh)) _acc[5].add(data.rh);
-  #endif
   
   if (_acc[1].full()) {
     if ((stable() || millis() - _lastUpload > MAX_UPLOAD_INTERVAL) && upload()) {
@@ -109,15 +104,6 @@ bool AQICN::upload() {
   #ifdef USE_TVOC
   if (_acc[3].count() > 0) {
     setReading(doc, i++, "tvoc", _acc[3], "ppb");
-  }
-  #endif
-
-  #ifdef USE_TEMP
-  if (_acc[4].count() > 0) {
-    setReading(doc, i++, "temp", _acc[4], "C");
-  }
-  if (_acc[5].count() > 0) {
-    setReading(doc, i++, "humidity", _acc[5], "%");
   }
   #endif
 

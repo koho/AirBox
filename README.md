@@ -1,13 +1,13 @@
 # Air Quality Monitor
 
-Air Nose is an air quality monitor built on ESP8266. It can be easily integrated
+Air Box is an air quality monitor built on ESP8266. It can be easily integrated
 into [Home Assistant](https://www.home-assistant.io/) via MQTT protocol.
 If you install it outdoors, you can also share your real-time air quality data on the [AQICN](https://waqi.info/) world
 map.
 
 ## Sensors
 
-It currently supports PM, temperature, humidity and TVOC monitoring.
+It currently supports PM and TVOC monitoring.
 
 ### PMS5003 (Required)
 
@@ -16,15 +16,6 @@ particulate matter (PM) in the air, specifically focusing on PM2.5 particles.
 
 - TX pin on sensor -> D6
 - RX pin on sensor -> D7
-
-### GY-SHT4x (Optional)
-
-SHT4x is a digital sensor platform for measuring relative humidity and temperature at different accuracy classes.
-
-- SDA pin on sensor -> D1
-- SCL pin on sensor -> D2
-
-Enable it by defining `USE_TEMP`.
 
 ### GY-SGP30 (Optional)
 
@@ -41,7 +32,6 @@ The config file is located in `include/config.h`. You must check your config fil
 
 | Name           | Type   | Required  | Description                                 |
 |----------------|--------|-----------|---------------------------------------------|
-| USE_TEMP       |        | No        | Enable the humidity and temperature sensor. |
 | USE_TVOC       |        | No        | Enable the VOC sensor.                      |
 | LAT            | float  | Yes       | Latitude.                                   |
 | LNG            | float  | Yes       | Longitude.                                  |
