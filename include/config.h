@@ -3,7 +3,6 @@
 
 // #define USE_AQICN
 // #define USE_TVOC
-// #define USE_TEMP
 
 #define LAT 0
 #define LNG 0
