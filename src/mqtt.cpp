@@ -40,24 +40,33 @@ void MQTT::sendHADiscovery() {
   static char devId[20] = { 0 };
   sprintf(devId, "AIRBOX_%X", ESP.getChipId());
   static char devName[20] = { 0 };
-  sprintf(devName, "Air Box %X", (uint16_t)ESP.getChipId());
+  sprintf(devName, "Air Monitor %X", (uint16_t)ESP.getChipId());
   uint8_t mac[6];
   char macStr[18] = { 0 };
   WiFi.macAddress(mac);
   sprintf(macStr, "%02X%02X%02X%02X%02X%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-  String mdl = "PM";
+  String mdl = "AQ-";
+  #ifdef USE_AQICN
+  mdl += "O";
+  #else
+  mdl += "I";
+  #endif
   #ifdef USE_TVOC
-  mdl += "VOC";
+  mdl += "02PV";
+  #else
+  mdl += "01P";
   #endif
   JsonDocument doc;
   doc["dev"]["ids"] = devId;
   doc["dev"]["name"] = devName;
-  doc["dev"]["mf"] = "OEM";
+  doc["dev"]["mf"] = "AirBox";
   doc["dev"]["mdl"] = mdl;
   doc["dev"]["sw"] = "1.0";
   doc["dev"]["sn"] = macStr;
   doc["dev"]["hw"] = "1.0rev1";
-  doc["o"]["name"] = "built-in";
+  doc["o"]["name"] = "AirBox";
+  doc["o"]["sw"] = "1.0";
+  doc["o"]["url"] = "https://github.com/koho/AirBox";
   doc["stat_t"] = _prefix + "/data";
   doc["avty_t"] = _prefix + "/status";
   doc["qos"] = 0;
