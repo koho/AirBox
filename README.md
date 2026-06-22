@@ -21,8 +21,8 @@ particulate matter (PM) in the air, specifically focusing on PM2.5 particles.
 
 The SGP30 is a digital multi-pixel VOC sensor.
 
-- SDA pin on sensor -> D1
-- SCL pin on sensor -> D2
+- SDA pin on sensor -> D2
+- SCL pin on sensor -> D1
 
 Enable it by defining `USE_TVOC`.
 

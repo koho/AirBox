@@ -53,7 +53,7 @@ void setup() {
 
   // TVOC
   #ifdef USE_TVOC
-  Wire.begin(D1, D2);
+  Wire.begin();
   if (!sgp.begin()){
     Serial.println("TVOC Sensor not found");
   }
