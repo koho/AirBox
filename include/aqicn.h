@@ -9,8 +9,8 @@
 #include "config.h"
 
 const int TREND_LEN = 300;
-const int TREND_LIMIT = 6;
-const int MAX_UPLOAD_INTERVAL = 20 * 60 * 1000;
+const int TREND_LIMIT = 5;
+const int MAX_UPLOAD_INTERVAL = 25 * 60 * 1000;
 
 class AQICN
 {
